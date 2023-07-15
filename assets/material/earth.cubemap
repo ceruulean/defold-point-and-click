@@ -1,0 +1,6 @@
+right: "/assets/textures/earth/earthcube-asia.png"
+left: "/assets/textures/earth/earthcube-america.png"
+top: "/assets/textures/earth/earthcube-polenorth.png"
+bottom: "/assets/textures/earth/earthcube-polesouth.png"
+front: "/assets/textures/earth/earthcube-africa.png"
+back: "/assets/textures/earth/earthcube-pacific.png"

@@ -1,0 +1,95 @@
+go.property("speed", 200)
+
+local camera = require "orthographic.camera"
+local Actor = require "actors.actor"
+
+function init(self)
+	self.input = vmath.vector3(0)
+	self.actor = Actor.new()
+	self.correction = vmath.vector3(0)
+	msg.post(".", "acquire_input_focus")
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	local position = go.get_position()
+	local new_pos = position
+
+	if self.actor.wants_to_move then
+		self.actor.velocity = vmath.normalize(self.input) * self.speed
+		self.actor.move(position)
+	else
+		self.actor.velocity = vmath.vector3(0)
+	end
+
+	new_pos =  position + self.actor.velocity * dt
+
+	self.actor.scale_depth_along_height(new_pos.y) 
+	new_pos.z = self.actor.z
+	
+	Actor.clamp_to_map(new_pos)
+	go.set_position(new_pos)
+	go.set_scale( self.actor.depth_scale )
+end
+
+function fixed_update(self, dt)
+	-- This function is called if 'Fixed Update Frequency' is enabled in the Engine section of game.project
+	-- Can be coupled with fixed updates of the physics simulation if 'Use Fixed Timestep' is enabled in
+	-- Physics section of game.project
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	-- Handle collision
+	if message_id == hash("load_stage") then
+		Actor.update_map_size(map_size)
+
+	elseif message_id == hash("contact_point_response") then
+		local comp = (message.distance) * message.normal -- <2>
+		go.set_position(go.get_position() + comp)
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("do_hit") or action_id == hash("touch_hit") and action.pressed then
+		print('hit')
+	end
+
+	if action.pressed then
+		if action_id == hash("move_up") then
+			self.input.y = self.input.y + 1
+		elseif action_id == hash("move_down") then
+			self.input.y = self.input.y - 1
+		elseif action_id == hash("move_left") then
+			self.input.x = self.input.x - 1
+		elseif action_id == hash("move_right") then
+			self.input.x = self.input.x + 1
+		end
+
+	elseif action.released then
+		if action_id == hash("move_up") then
+			self.input.y = self.input.y - 1
+		elseif action_id == hash("move_down") then
+			self.input.y = self.input.y + 1
+		elseif action_id == hash("move_left") then
+			self.input.x = self.input.x + 1
+		elseif action_id == hash("move_right") then
+			self.input.x = self.input.x - 1
+		end
+	end
+
+	self.actor.wants_to_move = vmath.length(self.input) > 0
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

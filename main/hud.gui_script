@@ -1,0 +1,39 @@
+local function load_image(self, filepath)
+	local file = io.open(filepath, "rb")
+
+	if (file) then
+		local data = file:read("*a")
+		file:close()
+		
+		if self.texture_id then -- <8>
+			gui.delete_texture(self.texture_id) 
+			self.texture_id = nil
+		end
+		
+		local img = image.load(data)
+		
+		if not img then 
+			set_message("Unable to load image")
+			return
+		end		
+		if gui.new_texture(filepath, img.width, img.height, img.type, img.buffer) then
+			gui.set_texture(gui.get_node("bg"), filepath)
+			self.texture_id = filepath
+		else
+			set_message("Unable to create texture")
+		end
+	end
+end
+
+function init(self)
+	self.texture_id = nil
+	load_image(self, "assets/backgrounds/bedroom_day.png")
+end
+
+function on_input(self, action_id, action)
+	-- if action_id == hash("touch") and action.pressed then
+	-- 	if gui.pick_node(gui.get_node("button"), action.x, action.y) then -- <13>
+	-- 		load_random(self) -- <2>
+	-- 	end
+	-- end
+end

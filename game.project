@@ -1,0 +1,25 @@
+[bootstrap]
+main_collection = /main/main.collectionc
+render = /orthographic/render/orthographic.renderc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1280
+height = 720
+
+[android]
+input_method = HiddenInputField
+
+[project]
+title = Point and Click Basic
+dependencies#0 = https://github.com/britzl/monarch/archive/refs/tags/3.7.0.zip
+dependencies#1 = https://github.com/astrochili/narrator/archive/refs/tags/1.7.zip
+dependencies#2 = https://github.com/Insality/defold-printer/archive/refs/tags/1.1.0.zip
+dependencies#3 = https://github.com/britzl/defold-orthographic/archive/refs/tags/3.2.1.zip
+dependencies#4 = https://github.com/britzl/defold-input/archive/refs/tags/4.6.0.zip
+
+[physics]
+debug = 1
+

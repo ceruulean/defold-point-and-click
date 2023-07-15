@@ -1,0 +1,44 @@
+local cursor = require "in.cursor"
+
+function init(self)
+	if not go.get("#cursor", "acquire_input_focus") then
+		self.forward_input = true
+		msg.post(".", "acquire_input_focus")
+	end
+
+	cursor.listen(msg.url("#cursor"), cursor.DRAG_START, function(message_id, message)
+		-- prevent dragging
+		if message.group ~= hash("draggable") then
+			print("Not draggable")
+			return true
+		end
+	end)
+end
+
+function on_input(self, action_id, action)
+	if self.forward_input then
+		msg.post("#cursor", "input", { action_id = action_id, action = action })
+	end
+end
+
+function on_message(self, message_id, message, sender)
+
+	if message.id == nil then return end
+	if message_id == cursor.OVER then
+		print("Cursor over", message.id, message.group, message.x, message.y)
+	elseif message_id == cursor.OUT then
+		print("Cursor out", message.id, message.group, message.x, message.y)
+	elseif message_id == cursor.PRESSED then
+		print("Pressed", message.id, message.group, message.x, message.y)
+	elseif message_id == cursor.RELEASED then
+		print("Released", message.id, message.group, message.x, message.y)
+	elseif message_id == cursor.CLICKED then
+		print("Clicked", message.id, message.group, message.x, message.y)
+	elseif message_id == cursor.DRAG_START then
+		print("Drag started", message.id, message.group, message.x, message.y)
+	elseif message_id == cursor.DRAG_END then
+		print("Drag ended", message.id, message.group, message.x, message.y)
+	elseif message_id == cursor.DRAG then
+		print("Drag", message.id, message.group, message.x, message.y, message.dx, message.dy)
+	end
+end

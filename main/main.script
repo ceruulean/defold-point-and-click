@@ -1,0 +1,84 @@
+local camera = require "orthographic.camera"
+
+TAU = 6.2831853072
+
+local CAMERA_ID = hash("/camera")
+
+local function update_bounds(self, size)
+	msg.post(".", "acquire_input_focus")
+	if self.bounds then
+		local left = 0
+		local top = size.y
+		local right = size.x
+		local bottom = 0
+		camera.bounds(CAMERA_ID, left, top, right, bottom)
+		print("Enabled camera bounds")
+	else
+		camera.bounds(CAMERA_ID)
+		print("Disabled camera bounds")
+	end
+end
+
+function init(self)
+	-- local bg_size = go.get("/bedroom/bg#bedroom", "size")
+	-- go.set("/bedroom/bg", "position", vmath.vector3( math.floor(bg_size.x / 2), math.floor(bg_size.y / 2), 0.0 ))
+	-- -- msg.post(".", "acquire_input_focus")
+	-- -- Tell the proxy "myproxy" to start loading.
+	-- -- msg.post("/loader#bedroom", "load")
+	self.bounds = true
+	-- msg.post("#", "update_bounds", {size = bg_size}) -- delay first time to allow the camera to init
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+
+end
+
+function fixed_update(self, dt)
+	-- This function is called if 'Fixed Update Frequency' is enabled in the Engine section of game.project
+	-- Can be coupled with fixed updates of the physics simulation if 'Use Fixed Timestep' is enabled in
+	-- Physics section of game.project
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("update_bounds") then
+		update_bounds(self, message.size)
+		msg.post("/player", "load_stage")
+
+	elseif message_id == hash("proxy_loaded") then
+		-- New world is loaded. Init and enable it.
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
+	elseif message_id == hash("contact_point_response") then
+		print(message.group)
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("interact") then
+-- 
+-- 		local coords = camera.screen_to_world(CAMERA_ID, vmath.vector3(action.x, action.y, 0.0))
+-- 		coords.z = -300.0
+-- 
+-- 		local ray_end = vmath.vector3(coords.x, coords.y, 200.0)
+-- 		print(coords, ray_end)
+-- 		coords.y = coords.y + 1
+-- 		coords.x = coords.x + 1
+-- 		local result = physics.raycast(coords, ray_end, { hash("interact") })
+-- 		print(result)
+	end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end
