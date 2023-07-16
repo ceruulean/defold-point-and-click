@@ -1,8 +1,6 @@
 go.property("width", 1280)
 go.property("height", 720)
 
-local goput = require "items.sprite_click"
-
 local function handle_click(url, action_id, action)
 	if action.released then
 		print("dfasdfasfdsafsa")
@@ -14,8 +12,6 @@ function init(self)
 	local bg_size = vmath.vector3(self.width, self.height, 0)
 	msg.post("/main", "update_bounds", {size = bg_size})
 	msg.post("/main", "load_stage")
-
-	goput.add("item#log", nil, handle_click)
 end
 
 function final(self)
