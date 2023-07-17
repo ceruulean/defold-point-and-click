@@ -20,6 +20,3 @@ dependencies#2 = https://github.com/Insality/defold-printer/archive/refs/tags/1.
 dependencies#3 = https://github.com/britzl/defold-orthographic/archive/refs/tags/3.2.1.zip
 dependencies#4 = https://github.com/britzl/defold-input/archive/refs/tags/4.6.0.zip
 
-[physics]
-debug = 1
-

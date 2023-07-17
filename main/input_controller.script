@@ -34,6 +34,7 @@ function on_message(self, message_id, message, sender)
 		print("Released", message.id, message.group, message.x, message.y)
 	elseif message_id == cursor.CLICKED then
 		print("Clicked", message.id, message.group, message.x, message.y)
+		msg.post(message.id, "interact")
 	elseif message_id == cursor.DRAG_START then
 		print("Drag started", message.id, message.group, message.x, message.y)
 	elseif message_id == cursor.DRAG_END then

@@ -6,6 +6,7 @@ Still WIP, goal is to be a good jumping off point for point-and-click games.
 - Z-overlapping sprites
 
 Todo:
+- Editor script to auto-set z based on y position: `100 * (1 - (pos.y - sprite.y / 2) / map.y)`
 - Hook up gui for inventory
 - Stage Manager for loading
 - NPC interaction
@@ -30,3 +31,4 @@ Todo:
 - [Forest background](https://qdanp.itch.io/forest-stage-escenario-bosque)
 - [Sr. Toasty Pixel UI](https://srtoasty.itch.io/ui-assets-pack-2)
 - [Pine Tree Pack](https://opengameart.org/content/pine-tree-pack)
+- [Rose](https://www.publicdomainpictures.net/en/view-image.php?image=474876&picture=flower-rose-vintage-clipart)

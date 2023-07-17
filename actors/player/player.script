@@ -7,6 +7,7 @@ function init(self)
 	self.input = vmath.vector3(0)
 	self.actor = Actor.new()
 	self.correction = vmath.vector3(0)
+
 	msg.post(".", "acquire_input_focus")
 end
 
@@ -20,12 +21,10 @@ function update(self, dt)
 	local position = go.get_position()
 	local new_pos = position
 
-	if self.actor.wants_to_move then
-		self.actor.velocity = vmath.normalize(self.input) * self.speed
-		self.actor.move(position)
-	else
-		self.actor.velocity = vmath.vector3(0)
-	end
+
+	-- self.actor.velocity = vmath.normalize(self.input) * self.speed
+	local v = vmath.normalize(self.input) * self.speed
+	self.actor.move(position, v)
 
 	new_pos =  position + self.actor.velocity * dt
 
@@ -48,10 +47,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	-- Handle collision
-	if message_id == hash("load_stage") then
-		Actor.update_map_size(map_size)
-
-	elseif message_id == hash("contact_point_response") then
+	if message_id == hash("contact_point_response") then
 		local comp = (message.distance) * message.normal -- <2>
 		go.set_position(go.get_position() + comp)
 	end
