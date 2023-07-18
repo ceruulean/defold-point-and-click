@@ -20,7 +20,7 @@ components {
 }
 components {
   id: "player"
-  component: "/actors/player/player.script"
+  component: "/actors/actor.script"
   position {
     x: 0.0
     y: 0.0

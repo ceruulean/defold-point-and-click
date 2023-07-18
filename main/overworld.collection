@@ -1,25 +1,5 @@
 name: "overworld"
 instances {
-  id: "player"
-  prototype: "/actors/player/player.go"
-  position {
-    x: 729.0
-    y: 110.0
-    z: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
   id: "camera"
   prototype: "/orthographic/camera.go"
   position {
@@ -60,6 +40,26 @@ instances {
       value: "0.0, 150.0, 0.0"
       type: PROPERTY_TYPE_VECTOR3
     }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "player"
+  prototype: "/actors/actor.go"
+  position {
+    x: 602.0
+    y: 131.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
   }
   scale3 {
     x: 1.0
@@ -108,23 +108,6 @@ embedded_instances {
 embedded_instances {
   id: "cursor"
   data: "components {\n"
-  "  id: \"controller\"\n"
-  "  component: \"/main/input_controller.script\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "  property_decls {\n"
-  "  }\n"
-  "}\n"
-  "components {\n"
   "  id: \"cursor\"\n"
   "  component: \"/in/cursor.script\"\n"
   "  position {\n"
@@ -147,6 +130,23 @@ embedded_instances {
   "    id: \"acquire_input_focus\"\n"
   "    value: \"true\"\n"
   "    type: PROPERTY_TYPE_BOOLEAN\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  "components {\n"
+  "  id: \"input_controller\"\n"
+  "  component: \"/main/input_controller.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
   "  }\n"
   "  property_decls {\n"
   "  }\n"
@@ -236,29 +236,10 @@ embedded_instances {
   "  }\n"
   "}\n"
   "embedded_components {\n"
-  "  id: \"forest_stage\"\n"
+  "  id: \"forest\"\n"
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/stages/forest/forest.collection\\\"\\n"
-  "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
-  "\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"bedroom_stage\"\n"
-  "  type: \"collectionfactory\"\n"
-  "  data: \"prototype: \\\"/stages/bedroom/bedroom.collection\\\"\\n"
-  "load_dynamically: false\\n"
+  "load_dynamically: true\\n"
   "dynamic_prototype: false\\n"
   "\"\n"
   "  position {\n"

@@ -14,6 +14,10 @@ key_trigger {
   input: KEY_D
   action: "move_right"
 }
+key_trigger {
+  input: KEY_SPACE
+  action: "interact"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT
   action: "interact"

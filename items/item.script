@@ -1,8 +1,7 @@
-local Globals = require "main.globals"
-
 go.property("item_type", 0)
 
 function init(self)
+	-- 
 end
 
 function final(self)
@@ -12,17 +11,12 @@ function final(self)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
-	if message_id == hash("interact") then
+	if message_id == hash("item_interact") then
 		if self.item_type == 0 then
-			-- handle logic for item types.
-			print("Dialogue only")
+			msg.post("overworld:/ui#hud", "update_text", { lines = {"A log."} })
 		elseif self.item_type == 1 then
 			print("Pickup")
 		end
-		print("Interact with item")
 	end
 end
 

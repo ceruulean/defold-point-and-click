@@ -34,18 +34,7 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	if action_id == hash("interact") then
--- 
--- 		local coords = camera.screen_to_world(CAMERA_ID, vmath.vector3(action.x, action.y, 0.0))
--- 		coords.z = -300.0
--- 
--- 		local ray_end = vmath.vector3(coords.x, coords.y, 200.0)
--- 		print(coords, ray_end)
--- 		coords.y = coords.y + 1
--- 		coords.x = coords.x + 1
--- 		local result = physics.raycast(coords, ray_end, { hash("interact") })
--- 		print(result)
-	end
+
 end
 
 function on_reload(self)

@@ -32,3 +32,4 @@ Todo:
 - [Sr. Toasty Pixel UI](https://srtoasty.itch.io/ui-assets-pack-2)
 - [Pine Tree Pack](https://opengameart.org/content/pine-tree-pack)
 - [Rose](https://www.publicdomainpictures.net/en/view-image.php?image=474876&picture=flower-rose-vintage-clipart)
+- [](https://ezekiel-eastbrook.itch.io/1000-brooklyn-new-york-anime-visual-novel-backgrounds)

@@ -1,3 +1,8 @@
+local printer = require("printer.printer")
+local styles = require("interface.styles")
+
+local text_lines = {}
+
 local function load_image(self, filepath)
 	local file = io.open(filepath, "rb")
 
@@ -25,15 +30,80 @@ local function load_image(self, filepath)
 	end
 end
 
+local function next_print(self)
+	local text = text_lines[self.index]
+	local source = nil
+	if type(text) == "table" then
+		text, source = text[1], text[2]
+	end
+	self.printer:print(text, source)
+end
+
+function close_dialogue(self)
+	gui.set_enabled(self.dialogue_box, false)
+	msg.post("/cursor#cursor", "acquire_input_focus")
+	-- timer.delay(3, false, function()
+	-- 	Globals.ui_dialogue_box_active = false
+	-- end)
+end
+
+
+function start_dialogue(self)
+	printer.clear(self.printer)
+	gui.set_enabled(self.dialogue_box, true)
+	msg.post("/cursor#cursor", "release_input_focus")
+	self.index = 1
+	timer.delay(0.1, false, function()
+		next_print(self)
+	end)
+end
+
 function init(self)
-	self.texture_id = nil
-	load_image(self, "assets/backgrounds/bedroom_day.png")
+	printer.add_styles(styles) -- base
+	printer.add_word_style("define", "define_style") -- advanced
+	printer.add_source_style("defold", "slow_appear") -- advanced
+	self.printer = printer.new(self, "dialogue_text")
+	self.dialogue_box = gui.get_node("dialogue_box")
+
+
+	msg.post(".", "acquire_input_focus")
+
+	msg.post(".", "update_text", { lines = {
+		"Hello! This text is being handled by a printer!",
+		"Or, you can define some words, that you want to print with a defined style",
+		}
+	})
 end
 
 function on_input(self, action_id, action)
-	-- if action_id == hash("touch") and action.pressed then
-	-- 	if gui.pick_node(gui.get_node("button"), action.x, action.y) then -- <13>
-	-- 		load_random(self) -- <2>
-	-- 	end
-	-- end
+	if (action_id == hash("interact") or action_id == hash("interact_touch")) and action.pressed then
+		if self.printer.is_print then
+			self.printer:instant_appear()
+		else
+			self.index = self.index + 1
+			if self.index > #text_lines then
+				close_dialogue(self)
+				return
+			end
+			next_print(self)
+		end
+	end
+end
+
+
+function update(self, dt)
+	self.printer:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("update_text") then
+		if dialogue_box_active then return end
+		text_lines = message.lines
+		start_dialogue(self)
+	end
+end
+
+function final(self)
+	self.printer:final()
 end
